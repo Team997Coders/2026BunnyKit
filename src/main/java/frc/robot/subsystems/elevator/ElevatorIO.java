@@ -30,7 +30,8 @@ public interface ElevatorIO {
     public double currentArmAngleTicks = 0.0;
 
     public double[] elevatorTimestamps = new double[] {};
-    public double[] elevatorPositionsRad = new double[] {};
+    public double[] frontPositionsRad = new double[] {};
+    public double[] backPositionsRad = new double[] {};
   }
 
   /** 

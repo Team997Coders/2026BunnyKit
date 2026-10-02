@@ -7,13 +7,17 @@
 
 package frc.robot.subsystems.elevator;
 
+import static frc.robot.subsystems.drive.DriveConstants.wheelRadiusMeters;
 import static frc.robot.subsystems.elevator.ElevatorConstants.*;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.littletonrobotics.junction.Logger;
 
 public class Elevator {
@@ -22,7 +26,8 @@ public class Elevator {
 
   private final Alert frontDisconnectedAlert;
   private final Alert backDisconnectedAlert;
-  private SwerveModulePosition[] odometryPositions = new SwerveModulePosition[] {};
+
+  private ElevatorPosition elevatorPosition;
 
   public Elevator(ElevatorIO io) {
     this.io = io;
@@ -41,12 +46,11 @@ public class Elevator {
     Logger.processInputs("Elevator", inputs);
 
     // Calculate positions for odometry
-    int sampleCount = inputs.odometryTimestamps.length; // All signals are sampled together
-    odometryPositions = new SwerveModulePosition[sampleCount];
+    int sampleCount = inputs.elevatorTimestamps.length; // All signals are sampled together
+    ElevatorPosition[] elevatorPositions = new ElevatorPosition[sampleCount];
+    
     for (int i = 0; i < sampleCount; i++) {
-      double positionMeters = inputs.odometryDrivePositionsRad[i] * wheelRadiusMeters;
-      Rotation2d angle = inputs.odometryTurnPositions[i];
-      odometryPositions[i] = new SwerveModulePosition(positionMeters, angle);
+      elevatorPositions[i] = new ElevatorPosition(inputs.frontPositionsRad[i], inputs.backPositionRad[i]);
     }
 
     // Update alerts

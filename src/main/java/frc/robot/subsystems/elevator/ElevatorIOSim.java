@@ -4,7 +4,9 @@ import static frc.robot.subsystems.elevator.ElevatorConstants.*;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.LinearSystemId;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class ElevatorIOSim implements ElevatorIO {
@@ -71,6 +73,10 @@ public class ElevatorIOSim implements ElevatorIO {
     inputs.targetArmAngleTicks = targetAngleTicks;
     inputs.currentArmAngleRadians = getArmAngleRadians();
     inputs.currentArmAngleTicks = getArmAngleTicks();
+
+    inputs.elevatorTimestamps = new double[] {Timer.getFPGATimestamp()};
+    inputs.frontPositionsRad = new double[] {inputs.frontMotorPositionRad};
+    inputs.backPositionsRad = new double[] {inputs.backMotorPositionRad};
   }
 
   public void setElevatorHeightMeters(double height) {
