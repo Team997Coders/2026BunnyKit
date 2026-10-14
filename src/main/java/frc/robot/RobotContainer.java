@@ -23,6 +23,9 @@ import frc.robot.subsystems.drive.GyroIORedux;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOKraken;
 import frc.robot.subsystems.drive.ModuleIOSim;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOSim;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -34,6 +37,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  private final Elevator elevator;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -53,6 +57,8 @@ public class RobotContainer {
                 new ModuleIOKraken(1),
                 new ModuleIOKraken(2),
                 new ModuleIOKraken(3));
+
+        elevator = new Elevator(new ElevatorIO() {});
         break;
 
       case SIM:
@@ -64,6 +70,8 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
+
+        elevator = new Elevator(new ElevatorIOSim());
         break;
 
       default:
@@ -75,6 +83,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+        elevator = new Elevator(new ElevatorIO() {});
         break;
     }
 
@@ -116,18 +125,10 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
-    // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> Rotation2d.kZero));
-
-    // Switch to X pattern when X button is pressed
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    controller.povUp().onTrue(Commands.runOnce(() -> elevator.setPosition(0, 0)));
+    controller.povDown().onTrue(Commands.runOnce(() -> elevator.setPosition(1, 0)));
+    controller.povLeft().onTrue(Commands.runOnce(() -> elevator.setPosition(0, Math.PI)));
+    controller.povRight().onTrue(Commands.runOnce(() -> elevator.setPosition(1, Math.PI)));
 
     // Reset gyro to 0° when B button is pressed
     controller
