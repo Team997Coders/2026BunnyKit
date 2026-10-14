@@ -21,11 +21,11 @@ public class ElevatorIOSim implements ElevatorIO {
   public ElevatorIOSim() {
     frontSim =
         new DCMotorSim(
-            LinearSystemId.createDCMotorSystem(frontGearbox, 0.000036, frontMotorReduction),
+            LinearSystemId.createDCMotorSystem(frontGearbox, 0.00036, frontMotorReduction),
             frontGearbox);
     backSim =
         new DCMotorSim(
-            LinearSystemId.createDCMotorSystem(backGearbox, 0.000036, backMotorReduction),
+            LinearSystemId.createDCMotorSystem(backGearbox, 0.00036, backMotorReduction),
             backGearbox);
   }
 
