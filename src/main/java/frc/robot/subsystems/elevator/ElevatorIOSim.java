@@ -4,23 +4,16 @@ import static frc.robot.subsystems.elevator.ElevatorConstants.*;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 
 public class ElevatorIOSim implements ElevatorIO {
   private final DCMotorSim frontSim;
   private final DCMotorSim backSim;
 
-  private PIDController frontController =
+  public PIDController frontController =
       new PIDController(elevatorSimP, elevatorSimI, elevatorSimD);
-  private PIDController backController =
-      new PIDController(elevatorSimP, elevatorSimI, elevatorSimD);
-  private double elevatorFFvolts =
-      0.0; // Assuming FF volts is going to be the bare minimum to keep the elevator from dropping
-  private double frontAppliedVolts = 0.0;
-  private double backAppliedVolts = 0.0;
+  public PIDController backController = new PIDController(elevatorSimP, elevatorSimI, elevatorSimD);
 
   private double targetHeightTicks = 0.0;
   private double targetAngleTicks = 0.0;
@@ -38,24 +31,22 @@ public class ElevatorIOSim implements ElevatorIO {
 
   @Override
   public void updateInputs(ElevatorIOInputs inputs) {
-    frontController.setSetpoint(targetAngleTicks + targetHeightTicks);
-    backController.setSetpoint(targetAngleTicks - targetHeightTicks);
+    frontController.setSetpoint(inputs.targetArmAngleTicks + inputs.targetHeightTicks);
+    backController.setSetpoint(inputs.targetArmAngleTicks - inputs.targetHeightTicks);
 
-    frontAppliedVolts =
-        elevatorFFvolts
+    inputs.frontMotorAppliedVolts =
+        inputs.elevatorFFvolts
             + frontController.calculate(frontSim.getAngularPositionRad() * ticksPerRadianMotor);
-    backAppliedVolts =
-        -elevatorFFvolts
+    inputs.backMotorAppliedVolts =
+        -inputs.elevatorFFvolts
             + backController.calculate(backSim.getAngularPositionRad() * ticksPerRadianMotor);
 
     // Update simulation state
-    frontSim.setInputVoltage(MathUtil.clamp(frontAppliedVolts, -12.0, 12.0));
-    backSim.setInputVoltage(MathUtil.clamp(backAppliedVolts, -12.0, 12.0));
+    frontSim.setInputVoltage(MathUtil.clamp(inputs.frontMotorAppliedVolts, -12.0, 12.0));
+    backSim.setInputVoltage(MathUtil.clamp(inputs.backMotorAppliedVolts, -12.0, 12.0));
     frontSim.update(0.02);
     backSim.update(0.02);
 
-    inputs.frontMotorAppliedVolts = frontAppliedVolts;
-    inputs.backMotorAppliedVolts = backAppliedVolts;
     inputs.frontMotorConnected = true;
     inputs.backMotorConnected = true;
     inputs.frontMotorCurrentAmps = frontSim.getCurrentDrawAmps();
@@ -74,9 +65,9 @@ public class ElevatorIOSim implements ElevatorIO {
     inputs.currentArmAngleRadians = getArmAngleRadians();
     inputs.currentArmAngleTicks = getArmAngleTicks();
 
-    inputs.elevatorTimestamps = new double[] {Timer.getFPGATimestamp()};
-    inputs.frontPositionsRad = new double[] {inputs.frontMotorPositionRad};
-    inputs.backPositionsRad = new double[] {inputs.backMotorPositionRad};
+    // inputs.elevatorTimestamps = new double[] {Timer.getFPGATimestamp()};
+    // inputs.frontPositionsRad = new double[] {inputs.frontMotorPositionRad};
+    // inputs.backPositionsRad = new double[] {inputs.backMotorPositionRad};
   }
 
   public void setElevatorHeightMeters(double height) {
@@ -95,7 +86,6 @@ public class ElevatorIOSim implements ElevatorIO {
     targetAngleTicks = ticks;
   }
 
-  
   public double getHeightMeters() {
     return getHeightTicks() / ticksPerMeter;
   }

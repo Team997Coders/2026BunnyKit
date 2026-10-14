@@ -3,6 +3,7 @@ package frc.robot.subsystems.elevator;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface ElevatorIO {
+
   @AutoLog
   public static class ElevatorIOInputs {
     public boolean frontMotorConnected = false;
@@ -28,46 +29,44 @@ public interface ElevatorIO {
     public double targetArmAngleTicks = 0.0;
     public double currentArmAngleRadians = 0.0;
     public double currentArmAngleTicks = 0.0;
-
-    public double[] elevatorTimestamps = new double[] {};
-    public double[] frontPositionsRad = new double[] {};
-    public double[] backPositionsRad = new double[] {};
   }
 
-  /** 
+  /**
    * Update inputs (called every loop)
-   * 
+   *
    * @param inputs
-   */ 
+   */
   public default void updateInputs(ElevatorIOInputs inputs) {}
 
   /**
    * Sets the target height of the elevator in meters, with 0 being bottomed out
+   *
    * @param height
    */
   public default void setElevatorHeightMeters(double height) {}
 
   /**
-  * Sets the target height of the elevator in encoder ticks
-  * You should probably set its position in meters and let 
-  * the internal maths handle the encoder ticks
-  * @param ticks
-  */
+   * Sets the target height of the elevator in encoder ticks You should probably set its position in
+   * meters and let the internal maths handle the encoder ticks
+   *
+   * @param ticks
+   */
   public default void setElevatorHeightEncoderTicks(double ticks) {}
 
   /**
-   * Sets the target angle of the elevator arm in radians, 
-   * with 0 going straight up and positive is clockwise
+   * Sets the target angle of the elevator arm in radians, with 0 going straight up and positive is
+   * clockwise
+   *
    * @param radians
    */
   public default void setArmAngleRad(double radians) {}
-  
+
   /**
-  * Sets the target angle of the elevator arm in encoder ticks
-  * You should use setArmAngleRad and let 
-  * the internal maths handle the encoder ticks
-  * @param ticks
-  */
+   * Sets the target angle of the elevator arm in encoder ticks You should use setArmAngleRad and
+   * let the internal maths handle the encoder ticks
+   *
+   * @param ticks
+   */
   public default void setArmAngleEncoderTicks(double ticks) {}
 
   /**
@@ -77,30 +76,27 @@ public interface ElevatorIO {
     return 0.0;
   }
 
-  /** 
-   * @return height of the elevator in encoder ticks, 
-   * You should use the getHeightMeters and let
-   * the internal maths handle the encoder ticks
-   */ 
+  /**
+   * @return height of the elevator in encoder ticks, You should use the getHeightMeters and let the
+   *     internal maths handle the encoder ticks
+   */
   public default double getHeightTicks() {
     return 0.0;
   }
 
   /**
-   * @return angle of the elevator arm in radians, 
-   * with 0 being straight up and positive is clockwise
+   * @return angle of the elevator arm in radians, with 0 being straight up and positive is
+   *     clockwise
    */
   public default double getArmAngleRadians() {
     return 0.0;
   }
 
-  /** 
-   * @return angle of the elevator arm in encoder ticks, 
-   * You should use the getArmAngleRadians and let
-   * the internal maths handle the encoder ticks
-   */ 
+  /**
+   * @return angle of the elevator arm in encoder ticks, You should use the getArmAngleRadians and
+   *     let the internal maths handle the encoder ticks
+   */
   public default double getArmAngleTicks() {
     return 0.0;
   }
-  
 }
