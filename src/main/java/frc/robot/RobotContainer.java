@@ -126,9 +126,9 @@ public class RobotContainer {
             () -> -controller.getRightX()));
 
     controller.povUp().onTrue(Commands.runOnce(() -> elevator.setPosition(0, 0)));
-    controller.povDown().onTrue(Commands.runOnce(() -> elevator.setPosition(1, 0)));
-    controller.povLeft().onTrue(Commands.runOnce(() -> elevator.setPosition(0, Math.PI)));
-    controller.povRight().onTrue(Commands.runOnce(() -> elevator.setPosition(1, Math.PI)));
+    controller.povDown().onTrue(Commands.runOnce(() -> elevator.setPosition(0.3, -Math.PI / 4)));
+    controller.povLeft().onTrue(Commands.runOnce(() -> elevator.setPosition(0, Math.PI / 4)));
+    controller.povRight().onTrue(Commands.runOnce(() -> elevator.setPosition(0.3, Math.PI / 4)));
 
     // Reset gyro to 0° when B button is pressed
     controller

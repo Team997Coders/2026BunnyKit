@@ -1,0 +1,141 @@
+{
+  "hubs": [
+    {
+      "x": -8,
+      "y": -8,
+      "width": 1552,
+      "height": 832,
+      "state": {
+        "sidebar": {
+          "width": 300,
+          "expanded": [
+            "/NT",
+            "/NT/SmartDashboard",
+            "/NT/SmartDashboard/Field",
+            "/NT/SmartDashboard/Field/Robot",
+            "/Sticky Faults",
+            "/Simulation",
+            "/SmartDashboard/Field/Robot",
+            "/SmartDashboard",
+            "/AdvantageKit",
+            "/AdvantageKit/Elevator",
+            "/AdvantageKit/RealOutputs",
+            "/AdvantageKit/RealOutputs/Mechanisms",
+            "/AdvantageKit/RealOutputs/Odometry"
+          ]
+        },
+        "tabs": {
+          "selected": 3,
+          "tabs": [
+            {
+              "type": 0,
+              "title": "",
+              "controller": null,
+              "controllerUUID": "zwepvzfkfys1d9q93kexmge7kab6kpiz",
+              "renderer": "",
+              "controlsHeight": 0
+            },
+            {
+              "type": 2,
+              "title": "Odometry",
+              "controller": {
+                "sources": [],
+                "field": "FRC:2026 Field",
+                "orientation": 0,
+                "size": "large"
+              },
+              "controllerUUID": "b5uowe9ip67f7yrli7uxtht31f2pldng",
+              "renderer": null,
+              "controlsHeight": 200
+            },
+            {
+              "type": 1,
+              "title": "Line Graph",
+              "controller": {
+                "leftSources": [],
+                "rightSources": [],
+                "discreteSources": [],
+                "leftLockedRange": null,
+                "rightLockedRange": null,
+                "leftUnitConversion": {
+                  "type": null,
+                  "factor": 1
+                },
+                "rightUnitConversion": {
+                  "type": null,
+                  "factor": 1
+                },
+                "leftFilter": 0,
+                "rightFilter": 0
+              },
+              "controllerUUID": "75card2trkf8uioujp1rq0w8lybql99x",
+              "renderer": null,
+              "controlsHeight": 200
+            },
+            {
+              "type": 3,
+              "title": "3D Field",
+              "controller": {
+                "sources": [
+                  {
+                    "type": "robot",
+                    "logKey": "NT:/AdvantageKit/RealOutputs/Odometry/Robot",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {
+                      "model": "2026 KitBot"
+                    }
+                  },
+                  {
+                    "type": "mechanism",
+                    "logKey": "NT:/AdvantageKit/RealOutputs/Mechanisms/Arm2D",
+                    "logType": "Mechanism2d",
+                    "visible": true,
+                    "options": {
+                      "plane": "xz"
+                    }
+                  }
+                ],
+                "game": "FRC:2025 Field (Welded)"
+              },
+              "controllerUUID": "2mpvmcx1xjzxnt0knwc1j25hc48997xl",
+              "renderer": {
+                "cameraIndex": -1,
+                "orbitFov": 50,
+                "cameraPosition": [
+                  -11.537158362869581,
+                  2.3121705320768893,
+                  1.1097108607687656
+                ],
+                "cameraTarget": [
+                  -0.29192899299915787,
+                  -0.5978812773852197,
+                  -0.07425635363212706
+                ]
+              },
+              "controlsHeight": 128
+            },
+            {
+              "type": 10,
+              "title": "Mechanism",
+              "controller": [
+                {
+                  "type": "mechanism",
+                  "logKey": "NT:/AdvantageKit/RealOutputs/Mechanisms/Arm2D",
+                  "logType": "Mechanism2d",
+                  "visible": true,
+                  "options": {}
+                }
+              ],
+              "controllerUUID": "fsb42tecd1gr71tfju28f9h7evpre7hp",
+              "renderer": null,
+              "controlsHeight": 200
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "satellites": [],
+  "version": "26.0.0"
+}
