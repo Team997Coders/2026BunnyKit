@@ -26,4 +26,10 @@ public class ElevatorConstants {
 
   public static final double ticksPerRotation = 42; // real number
   public static final double ticksPerRadianMotor = ticksPerRotation / Math.PI / 2;
+  
+  public static final int motor1ID = 0;
+  public static final int motor2ID = 1;
+  public static final int endcoder1ID = 2;
+  public static final int encoder2ID = 3;
+  public static final int armcoderID = 4;
 }
