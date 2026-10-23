@@ -1,0 +1,45 @@
+{
+  "name": "BBField.glb",
+  "isFTC": false,
+  "coordinateSystem": "wall-blue",
+  "rotations": [],
+  "widthInches": 651.2,
+  "heightInches": 317.7,
+  "defaultOrigin": "auto",
+  "driverStations": [
+    [-7.5, 1.75],
+    [-7.5, 0.0],
+    [-7.5, -1.75],
+    [7.5, 1.75],
+    [7.5, 0.0],
+    [7.5, -1.75]
+  ],
+  "gamePieces": [
+    {
+      "name": "Cone",
+      "rotations": [],
+      "position": [0.0, 0.0, 0.0],
+      "stagedObjects": []
+    }
+  ],
+  "aprilTags": [
+    {
+      "variant": "36h11-6.5in",
+      "id": 1,
+      "rotations": [{ "axis": "z", "degrees": 180.0 }],
+      "position": [8.25, -2.43, 1.32]
+    },
+    {
+      "variant": "36h11-6.5in",
+      "id": 2,
+      "rotations": [{ "axis": "z", "degrees": 180.0 }],
+      "position": [8.25, 0.0, 1.32]
+    },
+    {
+      "variant": "36h11-6.5in",
+      "id": 3,
+      "rotations": [{ "axis": "z", "degrees": 180.0 }],
+      "position": [8.25, 2.43, 1.32]
+    }
+  ]
+}

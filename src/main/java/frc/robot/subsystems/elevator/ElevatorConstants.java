@@ -32,4 +32,12 @@ public class ElevatorConstants {
   public static final int endcoder1ID = 2;
   public static final int encoder2ID = 3;
   public static final int armcoderID = 4;
+
+  public static final double toppledAngle = 0;
+  
+  public static final double startHeight = 0;
+  public static final double pickUpStandingHeight = 0;
+  public static final double pickUpToppledHeight = 0;
+  public static final double scoreLowHeight = 0;
+  public static final double scoreHighHeight = 0;
 }

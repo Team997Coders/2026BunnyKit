@@ -38,6 +38,29 @@ public class ElevatorIOReal implements ElevatorIO {
 
 
 }
+
+public enum ArmState {
+  START(0, startHeight, false), 
+  PICKUPSTANDINGRIGHT(Math.PI/2 , pickUpStandingHeight, false), 
+  PICKUPSTANDINGLEFT(-Math.PI/2, pickUpStandingHeight, false), 
+  PICKUPTOPPLEDRIGHT(toppledAngle, pickUpToppledHeight, true), 
+  PICKUPTOPPLEDLEFT(-toppledAngle, pickUpToppledHeight, true), 
+  SCORELOWRIGHT(0, scoreLowHeight, true), 
+  SCORELOWLEFT(0, scoreLowHeight, true), 
+  SCOREHIGHRIGHT(Math.PI/4, scoreHighHeight, true), 
+  SCOREHIGHLEFT(-Math.PI/4, scoreHighHeight, true);
+
+  double armPos;
+  double elevatorPos;
+  boolean intake;
+
+  private ArmState(double armPos, double elevatorPos, boolean intake) {
+    this.armPos = armPos;
+    this.elevatorPos = elevatorPos;
+    this.intake = intake;
+  }
+}
+
  @Override
   public void updateInputs(ElevatorIOInputs inputs) {
     frontController.setSetpoint(targetAngleTicks + targetHeightTicks);
@@ -114,5 +137,6 @@ public class ElevatorIOReal implements ElevatorIO {
     return (motor1encoder.getAbsPosition() + motor2encoder.getAbsPosition())
         * ticksPerRadianMotor;
   }
+  
 
 }
