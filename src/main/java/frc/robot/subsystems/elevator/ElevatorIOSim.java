@@ -6,6 +6,12 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color8Bit;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
+import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
+import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
 
 public class ElevatorIOSim implements ElevatorIO {
   private final DCMotorSim frontSim;
@@ -18,6 +24,11 @@ public class ElevatorIOSim implements ElevatorIO {
   private double targetHeightTicks = 0.0;
   private double targetAngleTicks = 0.0;
 
+  private final LoggedMechanism2d mechCanvas = new LoggedMechanism2d(2.0, 2.0);
+  private final LoggedMechanismRoot2d mechRoot;
+  private final LoggedMechanismLigament2d armLigament;
+  private final LoggedMechanismLigament2d simElevator;
+
   public ElevatorIOSim() {
     frontSim =
         new DCMotorSim(
@@ -27,6 +38,17 @@ public class ElevatorIOSim implements ElevatorIO {
         new DCMotorSim(
             LinearSystemId.createDCMotorSystem(backGearbox, 0.00036, backMotorReduction),
             backGearbox);
+
+    mechRoot = mechCanvas.getRoot("elevatorBase", 1.0, 0.5);
+    simElevator =
+        mechRoot.append(
+            new LoggedMechanismLigament2d(
+                "simElevator", 0.0, 0.0, 7, new Color8Bit(Color.kAliceBlue)));
+    armLigament =
+        simElevator.append(
+            new LoggedMechanismLigament2d(
+                "ArmSegment", 0.4, 0.0, 6, new Color8Bit(Color.kCrimson)));
+    simElevator.setAngle(90);
   }
 
   @Override
@@ -68,6 +90,11 @@ public class ElevatorIOSim implements ElevatorIO {
     // inputs.elevatorTimestamps = new double[] {Timer.getFPGATimestamp()};
     // inputs.frontPositionsRad = new double[] {inputs.frontMotorPositionRad};
     // inputs.backPositionsRad = new double[] {inputs.backMotorPositionRad};
+
+    armLigament.setAngle(Math.toDegrees(inputs.currentArmAngleRadians));
+    simElevator.setLength(inputs.currentHeightMeters + 0.2);
+
+    Logger.recordOutput("Mechanisms/Arm2D", mechCanvas);
   }
 
   public void setElevatorHeightMeters(double height) {
