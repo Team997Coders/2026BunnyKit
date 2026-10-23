@@ -26,4 +26,10 @@ public class ElevatorConstants {
 
   public static final double ticksPerRotation = 42; // real number
   public static final double ticksPerRadianMotor = ticksPerRotation / Math.PI / 2;
+
+  public static final double pickUpStandingHeight = 0;
+  public static final double toppledAngle = 0;
+  public static final double pickUpToppledHeight = 0;
+  public static final double scoreLowHeight = 0;
+  public static final double scoreHighHeight = 0;
 }
