@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.Drive;
@@ -23,6 +24,10 @@ import frc.robot.subsystems.drive.GyroIORedux;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOKraken;
 import frc.robot.subsystems.drive.ModuleIOSim;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOReal.ArmState;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -40,6 +45,9 @@ public class RobotContainer {
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
+  private final Elevator elevator;
+  private final ElevatorIO elevatorIO;
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -80,7 +88,8 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-
+    elevatorIO = new ElevatorIO() {};
+    elevator = new Elevator(elevatorIO);
     // Set up SysId routines
     autoChooser.addOption(
         "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
@@ -139,6 +148,24 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
                     drive)
                 .ignoringDisable(true));
+
+    Trigger togglePickup = controller.a();
+    Trigger toggleScoreHeight = controller.b();
+    Trigger reset = controller.y();
+    Trigger score = controller.x();
+    Trigger pickUpLeft = controller.leftBumper();
+    Trigger pickUpRight = controller.rightBumper();
+    Trigger objectDetect = controller.leftTrigger();
+    Trigger autoAlign = controller.rightTrigger();
+    boolean pickUpState = false;
+    boolean scoreState = false;
+
+    reset.onTrue(elevator.changeState(ArmState.START));
+    
+    if (pickUpState == true) {
+        
+    }
+   
   }
 
   /**
