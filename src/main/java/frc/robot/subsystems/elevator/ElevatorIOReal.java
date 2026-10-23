@@ -45,10 +45,10 @@ public enum ArmState {
   PICKUPSTANDINGLEFT(-Math.PI/2, pickUpStandingHeight, false), 
   PICKUPTOPPLEDRIGHT(toppledAngle, pickUpToppledHeight, true), 
   PICKUPTOPPLEDLEFT(-toppledAngle, pickUpToppledHeight, true), 
-  SCORELOWRIGHT(0, scoreLowHeight, true), 
-  SCORELOWLEFT(0, scoreLowHeight, true), 
-  SCOREHIGHRIGHT(Math.PI/4, scoreHighHeight, true), 
-  SCOREHIGHLEFT(-Math.PI/4, scoreHighHeight, true);
+  SCORELOWRIGHT(0, scoreLowHeight, false), 
+  SCORELOWLEFT(0, scoreLowHeight, false), 
+  SCOREHIGHRIGHT(Math.PI/4, scoreHighHeight, false), 
+  SCOREHIGHLEFT(-Math.PI/4, scoreHighHeight, false);
 
   double armPos;
   double elevatorPos;
