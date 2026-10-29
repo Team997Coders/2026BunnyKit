@@ -41,7 +41,7 @@ public class ElevatorIOReal implements ElevatorIO {
         armencoder = new Canandmag(armcoderID);
 
 
-    }
+}
 
  @Override
   public void updateInputs(ElevatorIOInputs inputs) {
