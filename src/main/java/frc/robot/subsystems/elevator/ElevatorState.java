@@ -11,8 +11,8 @@ public enum ElevatorState {
       toppledAngle, pickUpToppledHeight, true), // Picks up toppled cones on the right side
   INTAKE_TOPPLE_LEFT(
       -toppledAngle, pickUpToppledHeight, true), // Picks up toppled cones on the left side
-  SCORE_RIGHT(0, scoreLowHeight), // Score cones (lower-not max height) on the right side
-  SCORE_LEFT(0, scoreLowHeight), // Score cones (lower-not max height) on the left side
+  SCORE_RIGHT(Math.PI / 2, scoreLowHeight), // Score cones (lower-not max height) on the right side
+  SCORE_LEFT(-Math.PI / 2, scoreLowHeight), // Score cones (lower-not max height) on the left side
   SCORE_MAX_RIGHT(
       Math.PI / 4, scoreHighHeight), // Scores cones (max height of elevator) on the right side
   SCORE_MAX_LEFT(
@@ -67,7 +67,7 @@ public enum ElevatorState {
    *     clockwise
    */
   public double getAngle() {
-    return this.armAngle;
+    return this.armAngle / 2.0;
   }
 
   /**

@@ -28,8 +28,8 @@ public class ElevatorConstants {
   public static final double ticksPerRadianMotor = ticksPerRotation / Math.PI / 2;
 
   public static final double pickUpStandingHeight = 0;
-  public static final double toppledAngle = 0;
-  public static final double pickUpToppledHeight = 0;
-  public static final double scoreLowHeight = 0;
-  public static final double scoreHighHeight = 0;
+  public static final double toppledAngle = Math.PI / 2 + 0.6;
+  public static final double pickUpToppledHeight = 0.05;
+  public static final double scoreLowHeight = 0.3;
+  public static final double scoreHighHeight = 0.45;
 }

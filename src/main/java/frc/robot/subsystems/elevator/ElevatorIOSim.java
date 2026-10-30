@@ -47,7 +47,7 @@ public class ElevatorIOSim implements ElevatorIO {
     armLigament =
         simElevator.append(
             new LoggedMechanismLigament2d(
-                "ArmSegment", 0.4, 0.0, 6, new Color8Bit(Color.kCrimson)));
+                "ArmSegment", 0.7, 0.0, 6, new Color8Bit(Color.kCrimson)));
     simElevator.setAngle(90);
   }
 
@@ -111,6 +111,11 @@ public class ElevatorIOSim implements ElevatorIO {
 
   public void setArmAngleEncoderTicks(double ticks) {
     targetAngleTicks = ticks;
+  }
+
+  public void setElevatorState(ElevatorState state) {
+    setElevatorHeightMeters(state.getHeight());
+    setArmAngleRad(state.getAngle());
   }
 
   public double getHeightMeters() {

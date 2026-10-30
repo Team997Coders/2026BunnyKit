@@ -26,6 +26,7 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOSim;
+import frc.robot.subsystems.elevator.ElevatorState;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -125,10 +126,16 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
-    controller.povUp().onTrue(Commands.runOnce(() -> elevator.setPosition(0, 0)));
-    controller.povDown().onTrue(Commands.runOnce(() -> elevator.setPosition(0.3, -Math.PI / 4)));
-    controller.povLeft().onTrue(Commands.runOnce(() -> elevator.setPosition(0, Math.PI / 4)));
-    controller.povRight().onTrue(Commands.runOnce(() -> elevator.setPosition(0.3, Math.PI / 4)));
+    controller.povUp().onTrue(Commands.runOnce(() -> elevator.setState(ElevatorState.START)));
+    controller
+        .povDown()
+        .onTrue(Commands.runOnce(() -> elevator.setState(ElevatorState.INTAKE_TOPPLE_LEFT)));
+    controller
+        .povLeft()
+        .onTrue(Commands.runOnce(() -> elevator.setState(ElevatorState.SCORE_LEFT)));
+    controller
+        .povRight()
+        .onTrue(Commands.runOnce(() -> elevator.setState(ElevatorState.SCORE_MAX_LEFT)));
 
     // Reset gyro to 0° when B button is pressed
     controller

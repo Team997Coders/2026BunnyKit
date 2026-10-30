@@ -50,6 +50,15 @@ public class Elevator extends SubsystemBase {
   }
 
   /**
+   * Sets the target state of the elevator
+   *
+   * @param state Enum of a bunch of states
+   */
+  public void setState(ElevatorState state) {
+    setPosition(state.getHeight(), state.getAngle());
+  }
+
+  /**
    * @return angle of the elevator arm in radians, with 0 being straight up and positive is
    *     clockwise
    */
