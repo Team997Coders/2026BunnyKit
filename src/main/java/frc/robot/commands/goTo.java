@@ -86,12 +86,17 @@ public class goTo extends Command {
     SmartDashboard.putNumber("vy", vy);
     SmartDashboard.putNumber("vr", vr);
 
-    double fx = vx * Math.cos(r) + vy * Math.sin(r);
+    double fx = vx * Math.cos(r) - vy * Math.sin(r);
     double fy = vy * Math.cos(r) + vx * Math.sin(r);
 
     SmartDashboard.putNumber("fx", fx);
     SmartDashboard.putNumber("fy", fy);
     ChassisSpeeds vChassisSpeeds = new ChassisSpeeds(fx, fy, vr);
     drive.runVelocity(vChassisSpeeds);
+  }
+
+  @Override
+  public boolean isFinished(){
+    return timer.get() >= T;
   }
 }
