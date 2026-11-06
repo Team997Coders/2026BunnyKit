@@ -96,7 +96,7 @@ public class goTo extends Command {
   }
 
   @Override
-  public boolean isFinished(){
+  public boolean isFinished() {
     return timer.get() >= T;
   }
 }

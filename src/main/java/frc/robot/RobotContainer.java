@@ -127,7 +127,7 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
-    controller.a().whileTrue(new goTo(drive, new Pose2d(1, 1, new Rotation2d())));
+    controller.a().whileTrue(new goTo(drive, new Pose2d(1, 1, new Rotation2d(Math.PI))));
 
     controller.povUp().onTrue(Commands.runOnce(() -> elevator.setState(ElevatorState.START)));
     controller
