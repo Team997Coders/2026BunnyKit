@@ -14,6 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.littletonrobotics.junction.Logger;
 
 public class Module {
@@ -64,6 +65,18 @@ public class Module {
     // Apply setpoints
     io.setDriveVelocity(state.speedMetersPerSecond / wheelRadiusMeters);
     io.setTurnPosition(state.angle);
+  }
+
+  public void runSetpoint(SwerveModuleState state, double offset) {
+    // Optimize velocity setpoint
+    state.optimize(getAngle());
+    state.cosineScale(inputs.turnPosition);
+
+    // Apply setpoints
+    io.setDriveVelocity(state.speedMetersPerSecond / wheelRadiusMeters);
+    SmartDashboard.putNumber("original angle", state.angle.getRadians());
+    SmartDashboard.putNumber("modified angle", state.angle.getRadians() + offset);
+    io.setTurnPosition(new Rotation2d(state.angle.getRadians() + offset));
   }
 
   /** Runs the module with the specified output while controlling to zero degrees. */
