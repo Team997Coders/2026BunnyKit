@@ -48,8 +48,8 @@ public class ElevatorIOReal implements ElevatorIO {
         -elevatorFFvolts
             + backController.calculate(motor2encoder.getPosition() * ticksPerRadianMotor);
 
-    motor1.setVoltage(MathUtil.clamp(frontAppliedVolts, -12.0, 12.0));
-    motor2.setVoltage(MathUtil.clamp(backAppliedVolts, -12.0, 12.0));
+    motor1.setVoltage(MathUtil.clamp(frontAppliedVolts, -motorVoltageLimit, motorVoltageLimit));
+    motor2.setVoltage(MathUtil.clamp(backAppliedVolts, -motorVoltageLimit, motorVoltageLimit));
 
     inputs.frontMotorAppliedVolts = frontAppliedVolts;
     inputs.backMotorAppliedVolts = backAppliedVolts;
