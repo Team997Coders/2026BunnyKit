@@ -121,11 +121,11 @@ public class ModuleIOKraken implements ModuleIO {
     turnConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
     turnConfig.Feedback.RotorToSensorRatio = DriveConstants.turnMotorReduction;
     turnConfig.Feedback.SensorToMechanismRatio = DriveConstants.turnMotorReduction;
-    turnConfig.MotionMagic.MotionMagicCruiseVelocity = 100.0 / DriveConstants.turnMotorReduction;
+    turnConfig.MotionMagic.MotionMagicCruiseVelocity = MotionMagicCruiseVelocityNumerator / DriveConstants.turnMotorReduction;
     turnConfig.MotionMagic.MotionMagicAcceleration =
-        turnConfig.MotionMagic.MotionMagicCruiseVelocity / 0.100;
-    turnConfig.MotionMagic.MotionMagicExpo_kV = 0.12 * DriveConstants.turnMotorReduction;
-    turnConfig.MotionMagic.MotionMagicExpo_kA = 0.1;
+      turnConfig.MotionMagic.MotionMagicCruiseVelocity / MotionMagicVtoA;
+    turnConfig.MotionMagic.MotionMagicExpo_kV = kVMultiplier * DriveConstants.turnMotorReduction;
+    turnConfig.MotionMagic.MotionMagicExpo_kA = kA;
     turnConfig.ClosedLoopGeneral.ContinuousWrap = true;
     turnConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 

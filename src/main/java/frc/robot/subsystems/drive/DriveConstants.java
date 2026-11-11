@@ -33,6 +33,18 @@ public class DriveConstants {
         new Translation2d(-trackWidth / 2.0, -wheelBase / 2.0)
       };
 
+
+  public static final double rotationkP = 5.0;
+  public static final double translationkP = 5.0;
+  public static final double yawSignal = 50.0;
+  public static final int arrayBlockingCapacity = 20;
+  public static final double krakenTimestapDenominator = 1e6;
+  public static final double MotionMagicCruiseVelocityNumerator = 100.0;
+  public static final double MotionMagicVtoA = 0.100;
+  public static final double kVMultiplier = 0.12;
+  public static final double kA = 0.1;
+  public static final double krakenDriveVelocityOffset = Math.PI * 2;
+
   // Zeroed rotation values for each module, see setup instructions
   public static final Rotation2d frontLeftZeroRotation = new Rotation2d(0.0);
   public static final Rotation2d frontRightZeroRotation = new Rotation2d(0.0);
@@ -47,6 +59,7 @@ public class DriveConstants {
   public static final int backLeftDriveCanId = 3;
   public static final int frontRightDriveCanId = 7;
   public static final int backRightDriveCanId = 1;
+
 
   public static final Slot0Configs driveGains =
       new Slot0Configs().withKP(0.1).withKI(0).withKD(0).withKS(0).withKV(0.124);
@@ -132,4 +145,6 @@ public class DriveConstants {
               driveMotorCurrentLimit,
               1),
           moduleTranslations);
+
+    
 }

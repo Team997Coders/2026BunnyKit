@@ -10,6 +10,10 @@ package frc.robot.subsystems.drive;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+
+import static frc.robot.subsystems.drive.DriveConstants.arrayBlockingCapacity;
+import static frc.robot.subsystems.drive.DriveConstants.krakenTimestapDenominator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -66,7 +70,7 @@ public class KrakenOdometryThread {
 
   /** Registers a generic signal to be read from the thread. */
   public Queue<Double> registerSignal(DoubleSupplier signal) {
-    Queue<Double> queue = new ArrayBlockingQueue<>(20);
+    Queue<Double> queue = new ArrayBlockingQueue<>(arrayBlockingCapacity);
     Drive.odometryLock.lock();
     try {
       genericSignals.add(signal);
@@ -79,7 +83,7 @@ public class KrakenOdometryThread {
 
   /** Returns a new queue that returns timestamp values for each sample. */
   public Queue<Double> makeTimestampQueue() {
-    Queue<Double> queue = new ArrayBlockingQueue<>(20);
+    Queue<Double> queue = new ArrayBlockingQueue<>(arrayBlockingCapacity);
     Drive.odometryLock.lock();
     try {
       timestampQueues.add(queue);
@@ -94,7 +98,7 @@ public class KrakenOdometryThread {
     Drive.odometryLock.lock();
     try {
       // Get sample timestamp
-      double timestamp = RobotController.getFPGATime() / 1e6;
+      double timestamp = RobotController.getFPGATime() / krakenTimestapDenominator;
 
       // Read Spark values, mark invalid in case of error
       double[] krakenValues = new double[krakenSignals.size()];
