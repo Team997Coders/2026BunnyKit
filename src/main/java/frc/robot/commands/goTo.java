@@ -21,6 +21,10 @@ public class goTo extends Command {
   private TrapezoidProfile.Constraints constraints =
       new Constraints(Math.PI, Math.pow(Math.PI, 2.0));
   private ProfiledPIDController rController = new ProfiledPIDController(4, 0, 0, constraints);
+  private double halfingTolerance = 0.2; // Distance at which stops recalculating trajectory
+  private double distanceMultiplier =
+      0.8; // Decides duration of the operation (distance ** constant)
+  private double minTime = 0.1; // decides min time of operation
 
   public goTo(Drive drive, Pose2d goalPos) {
     this.drive = drive;
@@ -36,13 +40,23 @@ public class goTo extends Command {
 
   @Override
   public void initialize() {
-    this.startingSpeeds = drive.getChassisSpeeds();
-    this.startPos = drive.getPose();
-    rController.reset(this.startPos.getRotation().getRadians());
-    rController.setGoal(this.goalPos.getRotation().getRadians());
     timer = new Timer();
     timer.start();
-    T = 2;
+    recalculateTrajectory(
+        drive.getPose().getTranslation().getDistance(this.goalPos.getTranslation()));
+    rController.reset(this.startPos.getRotation().getRadians());
+    rController.setGoal(this.goalPos.getRotation().getRadians());
+  }
+
+  public void recalculateTrajectory(double distance) {
+    this.startingSpeeds =
+        ChassisSpeeds.fromRobotRelativeSpeeds(drive.getChassisSpeeds(), drive.getRotation())
+            .times(-1);
+    SmartDashboard.putNumber("reset speed x: ", this.startingSpeeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("reset speed y: ", this.startingSpeeds.vyMetersPerSecond);
+    this.startPos = drive.getPose();
+    T = Math.pow(distance, distanceMultiplier) + this.minTime;
+    timer.reset();
   }
 
   @Override
@@ -86,8 +100,8 @@ public class goTo extends Command {
     SmartDashboard.putNumber("vy", vy);
     SmartDashboard.putNumber("vr", vr);
 
-    double fx = vx * Math.cos(r) - vy * Math.sin(r);
-    double fy = vy * Math.cos(r) + vx * Math.sin(r);
+    double fx = vx * Math.cos(-r) - vy * Math.sin(-r);
+    double fy = vy * Math.cos(-r) + vx * Math.sin(-r);
 
     SmartDashboard.putNumber("fx", fx);
     SmartDashboard.putNumber("fy", fy);
@@ -97,6 +111,14 @@ public class goTo extends Command {
 
   @Override
   public boolean isFinished() {
-    return timer.get() >= T;
+    double distance = this.startPos.getTranslation().getDistance(this.goalPos.getTranslation());
+    if (distance < this.halfingTolerance) {
+      if (timer.get() >= T) {
+        return true;
+      }
+    } else if (timer.get() >= T / 2) {
+      recalculateTrajectory(distance);
+    }
+    return false;
   }
 }

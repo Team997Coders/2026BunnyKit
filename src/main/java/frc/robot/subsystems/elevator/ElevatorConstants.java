@@ -6,9 +6,9 @@ public class ElevatorConstants {
   public static final double elevatorSimP = 0.5;
   public static final double elevatorSimI = 0.0;
   public static final double elevatorSimD = 0.0;
-  public static final double elevatorP = 0.5;
-  public static final double elevatorI = 0.0;
-  public static final double elevatorD = 0.0;
+  public static final double elevatorRealP = 0.5;
+  public static final double elevatorRealI = 0.0;
+  public static final double elevatorRealD = 0.0;
 
   public static final DCMotor frontGearbox = DCMotor.getNEO(1);
   public static final DCMotor backGearbox = DCMotor.getNEO(1);
@@ -32,4 +32,10 @@ public class ElevatorConstants {
   public static final double pickUpToppledHeight = 0.05;
   public static final double scoreLowHeight = 0.3;
   public static final double scoreHighHeight = 0.45;
+
+  public static int motor1ID = 0; // TODO: get real can id's
+  public static int motor2ID = 0;
+  public static int endcoder1ID = 0;
+  public static int encoder2ID = 0;
+  public static int armcoderID = 0;
 }
