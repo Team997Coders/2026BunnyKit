@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.GoToGrid;
 
 public class goTo extends Command {
   private Drive drive;
@@ -18,6 +19,7 @@ public class goTo extends Command {
   private ChassisSpeeds startingSpeeds;
   private Timer timer;
   private double T;
+  private GoToGrid grid;
   private TrapezoidProfile.Constraints constraints =
       new Constraints(Math.PI, Math.pow(Math.PI, 2.0));
   private ProfiledPIDController rController = new ProfiledPIDController(4, 0, 0, constraints);
@@ -26,20 +28,21 @@ public class goTo extends Command {
       0.8; // Decides duration of the operation (distance ** constant)
   private double minTime = 0.1; // decides min time of operation
 
-  public goTo(Drive drive, Pose2d goalPos) {
+  public goTo(Drive drive, GoToGrid grid) {
     this.drive = drive;
-    this.goalPos = goalPos;
     this.goalSpeeds = new ChassisSpeeds();
+    this.grid = grid;
   }
 
-  public goTo(Drive drive, Pose2d goalPos, ChassisSpeeds goalSpeeds) {
+  public goTo(Drive drive, GoToGrid grid, ChassisSpeeds goalSpeeds) {
     this.drive = drive;
-    this.goalPos = goalPos;
     this.goalSpeeds = goalSpeeds;
+    this.grid = grid;
   }
 
   @Override
   public void initialize() {
+    this.goalPos = grid.getClosestPose(drive.getPose());
     timer = new Timer();
     timer.start();
     recalculateTrajectory(

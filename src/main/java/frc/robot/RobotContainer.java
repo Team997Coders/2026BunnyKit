@@ -8,8 +8,6 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.goTo;
-import frc.robot.commands.runVelocityTesting;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.GoToGrid;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIORedux;
 import frc.robot.subsystems.drive.ModuleIO;
@@ -128,8 +126,8 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
 
-    controller.a().whileTrue(new goTo(drive, new Pose2d(1, 1, new Rotation2d(0))));
-    controller.y().whileTrue(new runVelocityTesting(drive));
+    GoToGrid positions = new GoToGrid(Constants.FIELD_TAG_POSES);
+    controller.a().whileTrue(new goTo(drive, positions));
 
     controller.povUp().onTrue(Commands.runOnce(() -> elevator.setState(ElevatorState.START)));
     controller
@@ -141,17 +139,6 @@ public class RobotContainer {
     controller
         .povRight()
         .onTrue(Commands.runOnce(() -> elevator.setState(ElevatorState.SCORE_MAX_LEFT)));
-
-    // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
-                    drive)
-                .ignoringDisable(true));
   }
 
   /**
