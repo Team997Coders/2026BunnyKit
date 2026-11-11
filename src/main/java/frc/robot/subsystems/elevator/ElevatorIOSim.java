@@ -113,4 +113,6 @@ public class ElevatorIOSim implements ElevatorIO {
     return (frontSim.getAngularPositionRad() + backSim.getAngularPositionRad())
         * ticksPerRadianMotor;
   }
+
+  public void setState(ArmState)
 }

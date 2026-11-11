@@ -39,8 +39,6 @@ public class ElevatorIOReal implements ElevatorIO {
         motor1encoder = new Canandmag(endcoder1ID);
         motor2encoder = new Canandmag(encoder2ID);
         armencoder = new Canandmag(armcoderID);
-
-
 }
 
  @Override
