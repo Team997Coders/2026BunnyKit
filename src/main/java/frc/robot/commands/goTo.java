@@ -42,6 +42,8 @@ public class goTo extends Command {
 
   @Override
   public void initialize() {
+    rController.enableContinuousInput(-Math.PI, Math.PI);
+    rController.setTolerance(0.05);
     this.goalPos = grid.getClosestPose(drive.getPose());
     timer = new Timer();
     timer.start();
@@ -103,8 +105,15 @@ public class goTo extends Command {
     SmartDashboard.putNumber("vy", vy);
     SmartDashboard.putNumber("vr", vr);
 
-    double fx = vx * Math.cos(-r) - vy * Math.sin(-r);
-    double fy = vy * Math.cos(-r) + vx * Math.sin(-r);
+    double fx;
+    double fy;
+    if (timer.get() <= T) {
+      fx = vx * Math.cos(-r) - vy * Math.sin(-r);
+      fy = vy * Math.cos(-r) + vx * Math.sin(-r);
+    } else {
+      fx = 0;
+      fy = 0;
+    }
 
     SmartDashboard.putNumber("fx", fx);
     SmartDashboard.putNumber("fy", fy);
@@ -116,7 +125,7 @@ public class goTo extends Command {
   public boolean isFinished() {
     double distance = this.startPos.getTranslation().getDistance(this.goalPos.getTranslation());
     if (distance < this.halfingTolerance) {
-      if (timer.get() >= T) {
+      if (timer.get() >= T && rController.atGoal()) {
         return true;
       }
     } else if (timer.get() >= T / 2) {

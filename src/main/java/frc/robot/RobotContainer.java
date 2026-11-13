@@ -8,10 +8,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,9 +29,7 @@ import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOSim;
 import frc.robot.subsystems.elevator.ElevatorState;
-
 import java.io.IOException;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -135,11 +131,14 @@ public class RobotContainer {
 
     AprilTagFieldLayout fieldTags;
     try {
-      fieldTags = new AprilTagFieldLayout("src/main/deploy/2026-bunnybots-v1.json");
-  } catch (IOException e) {
-    DriverStation.reportError("Failed to load custom AprilTag layout, falling back to default.", e.getStackTrace());
-      fieldTags = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-  }
+      fieldTags =
+          new AprilTagFieldLayout(
+              Filesystem.getDeployDirectory().toPath().resolve("bunnyTagsSim.json"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      fieldTags = null; // will crash code :)
+    }
+
     GoToGrid positions = new GoToGrid(fieldTags.getTags());
     controller.a().whileTrue(new goTo(drive, positions));
 

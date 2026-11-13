@@ -2,13 +2,20 @@
   "name": "BBField",
   "isFTC": false,
   "coordinateSystem": "wall-blue",
-  "rotations": {
-    "axis": "z",
-    "degrees": 0
-  },
+  "rotations": [
+    {
+      "axis": "z",
+      "degrees": 90
+    }
+  ],
+  "position": [
+    -4.4,
+    4.2,
+    0.0
+  ],
   "widthInches": 315,
   "heightInches": 651,
-  "defaultOrigin": "auto",
+  "defaultOrigin": "blue",
   "driverStations": [],
   "gamePieces": [],
   "aprilTags": []
