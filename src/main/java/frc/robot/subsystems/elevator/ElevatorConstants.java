@@ -38,4 +38,7 @@ public class ElevatorConstants {
   public static int endcoder1ID = 0;
   public static int encoder2ID = 0;
   public static int armcoderID = 0;
+
+  public static double motorVoltageLimit = 12.0;
+  public static double simUpdateTime = 0.02;
 }

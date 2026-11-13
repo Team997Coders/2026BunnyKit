@@ -25,6 +25,7 @@ import java.util.List;
 public final class Constants {
   public static final Mode simMode = Mode.SIM;
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+  public static AprilTagFieldLayout fieldTags;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -36,11 +37,5 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
-  
-  try {
-    AprilTagFieldLayout fieldTags = new AprilTagFieldLayout("src/main/deploy/2026-bunnybots-v1.json");
-  } catch (IOException e) {
-    DriverStation.reportError("Failed to load custom AprilTag layout, falling back to default.", e.getStackTrace());
-    AprilTagFieldLayout fieldTags = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-  }
 }
+

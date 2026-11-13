@@ -64,10 +64,10 @@ public class ElevatorIOSim implements ElevatorIO {
             + backController.calculate(backSim.getAngularPositionRad() * ticksPerRadianMotor);
 
     // Update simulation state
-    frontSim.setInputVoltage(MathUtil.clamp(inputs.frontMotorAppliedVolts, -12.0, 12.0));
-    backSim.setInputVoltage(MathUtil.clamp(inputs.backMotorAppliedVolts, -12.0, 12.0));
-    frontSim.update(0.02);
-    backSim.update(0.02);
+    frontSim.setInputVoltage(MathUtil.clamp(inputs.frontMotorAppliedVolts, -motorVoltageLimit, motorVoltageLimit));
+    backSim.setInputVoltage(MathUtil.clamp(inputs.backMotorAppliedVolts, -motorVoltageLimit, motorVoltageLimit));
+    frontSim.update(simUpdateTime);
+    backSim.update(simUpdateTime);
 
     inputs.frontMotorConnected = true;
     inputs.backMotorConnected = true;
